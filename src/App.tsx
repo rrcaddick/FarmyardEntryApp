@@ -13,9 +13,15 @@ const Drawer = createDrawerNavigator();
 
 const HomeDrawer = () => {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator
+      screenOptions={{
+        headerShown: false,
+        drawerStyle: {
+          width: "65%",
+        },
+      }}
+    >
       <Drawer.Screen name="HomeScreen" component={HomeScreen} />
-      {/* Add other screens to the drawer here */}
     </Drawer.Navigator>
   );
 };
