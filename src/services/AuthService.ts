@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = 'https://dummyjson.com/auth';
+const API_URL = "https://dummyjson.com/auth";
 
 export interface LoginCredentials {
   username: string;
@@ -8,6 +8,7 @@ export interface LoginCredentials {
 }
 
 export interface User {
+  id: number;
   email: string;
   username: string;
   firstName: string;
@@ -19,9 +20,8 @@ export interface User {
 class AuthService {
   async login(credentials: LoginCredentials): Promise<User> {
     const response = await axios.post(`${API_URL}/login`, credentials);
-    const {email, username, firstName, lastName, token, refreshToken}: User =
-      response.data;
-    return {email, username, firstName, lastName, token, refreshToken};
+    const { id, email, username, firstName, lastName, token, refreshToken }: User = response.data;
+    return { id, email, username, firstName, lastName, token, refreshToken };
   }
 
   async logout(): Promise<void> {

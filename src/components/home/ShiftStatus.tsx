@@ -4,22 +4,21 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { colors } from "../../styles/colors";
 
 interface ShiftStatusProps {
-  isOpen: boolean;
-  onToggleShift: () => void;
+  onOpenShift: () => void;
 }
 
-const ShiftStatus: React.FC<ShiftStatusProps> = ({ isOpen, onToggleShift }) => (
-  <View style={styles.shiftStatus}>
-    <Icon name="access-time" size={48} color={colors.gray} />
-    <Text style={styles.shiftStatusText}>{isOpen ? "Shift is open" : "Shift is closed"}</Text>
-    <Text style={styles.shiftStatusSubtext}>
-      {isOpen ? "Close shift to end sales" : "Open a shift to perform sales"}
-    </Text>
-    <TouchableOpacity style={styles.shiftButton} onPress={onToggleShift}>
-      <Text style={styles.shiftButtonText}>{isOpen ? "CLOSE SHIFT" : "OPEN SHIFT"}</Text>
-    </TouchableOpacity>
-  </View>
-);
+const ShiftStatus: React.FC<ShiftStatusProps> = ({ onOpenShift }) => {
+  return (
+    <View style={styles.shiftStatus}>
+      <Icon name="access-time" size={48} color={colors.gray} />
+      <Text style={styles.shiftStatusText}>Shift is closed</Text>
+      <Text style={styles.shiftStatusSubtext}>Open a shift to perform sales</Text>
+      <TouchableOpacity style={styles.shiftButton} onPress={onOpenShift}>
+        <Text style={styles.shiftButtonText}>OPEN SHIFT</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   shiftStatus: {

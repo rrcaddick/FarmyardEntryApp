@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from "react-native";
 import { DrawerContentComponentProps, DrawerContentScrollView } from "@react-navigation/drawer";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { useAppSelector } from "../hooks/useStore";
 
 interface MenuItem {
   icon: string;
@@ -15,12 +16,14 @@ const menuItems: MenuItem[] = [
 ];
 
 const DrawerNavigator: React.FC<DrawerContentComponentProps> = (props) => {
+  const user = useAppSelector((state) => state.auth.user);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.ownerText}>Owner</Text>
-        <Text style={styles.subText}>POS 3</Text>
-        <Text style={styles.subText}>Test</Text>
+        <Text style={styles.ownerText}>The Farmyard Park (Pty) Ltd</Text>
+        <Text style={styles.subText}>{`${user?.firstName} ${user?.lastName}`}</Text>
+        <Text style={styles.subText}>{user?.email}</Text>
       </View>
       <DrawerContentScrollView {...props}>
         {menuItems.map((item, index) => (

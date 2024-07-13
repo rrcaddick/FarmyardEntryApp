@@ -1,9 +1,5 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-
-interface User {
-  email: string;
-  token: string;
-}
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { User } from "../../services/AuthService";
 
 interface AuthState {
   user: User | null;
@@ -18,10 +14,10 @@ const initialState: AuthState = {
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
-    loginStart: state => {
+    loginStart: (state) => {
       state.isLoading = true;
       state.error = null;
     },
@@ -33,14 +29,14 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    logout: state => {
+    logout: (state) => {
       state.user = null;
       state.error = null;
     },
   },
 });
 
-const {loginStart, loginSuccess, loginFailure, logout} = authSlice.actions;
+const { loginStart, loginSuccess, loginFailure, logout } = authSlice.actions;
 
-export {loginStart, loginSuccess, loginFailure, logout};
+export { loginStart, loginSuccess, loginFailure, logout };
 export default authSlice.reducer;
