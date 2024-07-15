@@ -9,6 +9,10 @@ import BarcodeScanner, { VehicleInformation } from "../components/scanning/Barco
 import { BLEPrinter } from "react-native-thermal-receipt-printer-image-qr";
 import { BleManager } from "react-native-ble-plx";
 
+import { NativeModules } from "react-native";
+
+const { YocoModule } = NativeModules;
+
 type HomeScreenProps = {
   navigation: DrawerNavigationProp<any>;
 };
@@ -85,6 +89,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     }
   };
 
+  const handlePairing = async () => {
+    try {
+      await YocoModule.pairTerminal();
+    } catch (error) {
+      console.error("Error pairing terminal:", error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Header navigation={navigation} />
@@ -107,6 +119,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                 <Text style={styles.resultText}>Color: {scanResult.color.split(" / ")[0]}</Text>
                 <Text style={styles.resultText}>Number Plate: {scanResult.licenseNumber}</Text>
                 <Button title="Print Ticket" onPress={printTicket} />
+                <Button title="Initiate Pairing" onPress={handlePairing} />
               </View>
             ) : null}
           </View>
