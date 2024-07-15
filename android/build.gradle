@@ -10,12 +10,23 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://yocotechnologies.jfrog.io/artifactory/public/' }
     }
     dependencies {
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+        classpath("org.jfrog.buildinfo:build-info-extractor-gradle:latest.release")
+    }
+}
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://yocotechnologies.jfrog.io/artifactory/public/' }
     }
 }
 
 apply plugin: "com.facebook.react.rootproject"
+
+apply plugin: "com.jfrog.artifactory"

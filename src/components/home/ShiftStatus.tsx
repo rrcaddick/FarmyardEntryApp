@@ -4,21 +4,17 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { colors } from "../../styles/colors";
 
 interface ShiftStatusProps {
-  onOpenShift: () => void;
+  onToggleShift: () => void;
 }
 
-const ShiftStatus: React.FC<ShiftStatusProps> = ({ onOpenShift }) => {
-  return (
-    <View style={styles.shiftStatus}>
-      <Icon name="access-time" size={48} color={colors.gray} />
-      <Text style={styles.shiftStatusText}>Shift is closed</Text>
-      <Text style={styles.shiftStatusSubtext}>Open a shift to perform sales</Text>
-      <TouchableOpacity style={styles.shiftButton} onPress={onOpenShift}>
-        <Text style={styles.shiftButtonText}>OPEN SHIFT</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+const ShiftStatus: React.FC<ShiftStatusProps> = ({ onToggleShift }) => (
+  <View style={styles.shiftStatus}>
+    <Icon name="access-time" size={80} color={colors.gray} />
+    <TouchableOpacity style={styles.shiftButton} onPress={onToggleShift}>
+      <Text style={styles.shiftButtonText}>OPEN SHIFT</Text>
+    </TouchableOpacity>
+  </View>
+);
 
 const styles = StyleSheet.create({
   shiftStatus: {
@@ -47,5 +43,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-
 export default ShiftStatus;
