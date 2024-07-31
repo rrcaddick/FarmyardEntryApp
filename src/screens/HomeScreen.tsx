@@ -8,10 +8,7 @@ import { openShift } from "../store/slices/shiftSlice";
 import BarcodeScanner, { VehicleInformation } from "../components/scanning/BarcodeScanner";
 import { BLEPrinter } from "react-native-thermal-receipt-printer-image-qr";
 import { BleManager } from "react-native-ble-plx";
-
-import { NativeModules } from "react-native";
-
-const { YocoModule } = NativeModules;
+import AddPay from "react-native-addpay";
 
 type HomeScreenProps = {
   navigation: DrawerNavigationProp<any>;
@@ -25,9 +22,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [scanResult, setScanResult] = useState<VehicleInformation>();
   const [printer, setPrinter] = useState<any | null>(null);
   const bleManager = new BleManager();
+  const [isPlateScanning, setIsPlateScanning] = useState(false);
+  const [plateResult, setPlateResult] = useState<string>("");
 
   useEffect(() => {
-    // Initialize BLE printer
     BLEPrinter.init().then(() => {
       console.log("Printer initialized");
     });
@@ -89,12 +87,23 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     }
   };
 
-  const handlePairing = async () => {
-    try {
-      await YocoModule.pairTerminal();
-    } catch (error) {
-      console.error("Error pairing terminal:", error);
-    }
+  const handlePayment = async () => {
+    const addPay = new AddPay({
+      version: "A01",
+      appId: "wz09484b0279d59c77",
+      loginMode: "LoginFree",
+      userId: "00",
+      userPassword: "123456",
+    });
+
+    const test = await addPay.sale({
+      amt: "000000020000",
+      businessOrderNo: "4",
+      paymentScenario: "CASH",
+      POSMode: "2",
+    });
+
+    console.log(test);
   };
 
   return (
@@ -103,9 +112,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
       {currentShift ? (
         isScanning ? (
-          <>
-            <BarcodeScanner onScan={handleScan} />
-          </>
+          <BarcodeScanner onScan={handleScan} />
         ) : (
           <View>
             <ChargeDisplay charge={0} />
@@ -119,7 +126,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                 <Text style={styles.resultText}>Color: {scanResult.color.split(" / ")[0]}</Text>
                 <Text style={styles.resultText}>Number Plate: {scanResult.licenseNumber}</Text>
                 <Button title="Print Ticket" onPress={printTicket} />
-                <Button title="Initiate Pairing" onPress={handlePairing} />
+                <Button title="Pay" onPress={handlePayment} />
+              </View>
+            ) : null}
+            {plateResult ? (
+              <View style={styles.resultContainer}>
+                <Text style={styles.resultText}>Scanned Plate: {plateResult}</Text>
               </View>
             ) : null}
           </View>
@@ -145,6 +157,12 @@ const styles = StyleSheet.create({
   resultText: {
     fontSize: 16,
     color: "#000",
+  },
+  cameraContainer: {
+    flex: 1,
+  },
+  preview: {
+    flex: 1,
   },
 });
 

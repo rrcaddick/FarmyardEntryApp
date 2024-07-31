@@ -20,8 +20,8 @@ type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "
 const { width, height } = Dimensions.get("window");
 
 const LoginScreen: React.FC = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("emilys");
+  const [password, setPassword] = useState("emilyspass");
   const { login, isLoading, error } = useAuth();
   const navigation = useNavigation<LoginScreenNavigationProp>();
 
@@ -58,13 +58,14 @@ const LoginScreen: React.FC = () => {
       <View style={styles.loginContainer}>
         <Text style={styles.loginText}>LOGIN</Text>
         <View style={styles.inputContainer}>
-          <TextInput style={styles.input} placeholder="example@email.com" value={username} onChangeText={setUsername} />
+          <TextInput style={styles.input} placeholder="example@email.com" value="emilys" onChangeText={setUsername} />
         </View>
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
             placeholder="Password"
-            value={password}
+            // value={password}
+            value="emilyspass"
             onChangeText={setPassword}
             secureTextEntry
           />

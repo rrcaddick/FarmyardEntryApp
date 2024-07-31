@@ -13,12 +13,8 @@
     "noEmit": true,
     "target": "esnext",
     "lib": ["es6"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "moduleSuffixes": [".ios", ".android", ".native", ""]
   },
-  "exclude": [
-    "node_modules",
-    "babel.config.js",
-    "metro.config.js",
-    "jest.config.js"
-  ]
+  "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"]
 }
